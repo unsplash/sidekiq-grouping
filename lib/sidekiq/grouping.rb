@@ -57,4 +57,8 @@ Sidekiq.configure_server do |config|
   end
 end
 
-Sidekiq::Grouping.start! if Sidekiq.server?
+if defined?(Rails)
+  require "sidekiq/grouping/railtie"
+else
+  Sidekiq::Grouping.start! if Sidekiq.server?
+end
